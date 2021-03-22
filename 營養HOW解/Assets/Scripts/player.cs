@@ -40,10 +40,21 @@ public class player : MonoBehaviour
             transform.localScale=new Vector3(facedirection*0.2f,0.2f,0.2f);
         }
         //跳躍
-        if(Input.GetButtonDown("Jump"))
+        if(Input.GetButtonDown("Jump")&&coll.IsTouchingLayers(ground))
         {
             rb.velocity=new Vector2(rb.velocity.x,jumpforce*Time.deltaTime);
             anim.SetBool("jumping",true);
+        }
+        //蹲下
+        if(Input.GetButtonDown("Crouch")&&coll.IsTouchingLayers(ground))
+        {
+            anim.SetBool("idle",false);
+            anim.SetBool("crouching",true);
+        }
+        if(Input.GetButtonUp("Crouch")&&coll.IsTouchingLayers(ground))
+        {
+            anim.SetBool("crouching",true);
+            anim.SetBool("idle",true);
         }
     }
 
