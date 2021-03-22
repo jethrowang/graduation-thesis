@@ -10,14 +10,13 @@ public class player : MonoBehaviour
     public float speed;
     public float jumpforce;
     public LayerMask ground;
-    // Start is called before the first frame update
+    public int poop;
     void Start()
     {
         rb=GetComponent<Rigidbody2D>();
         anim=GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         Movement();
@@ -38,7 +37,7 @@ public class player : MonoBehaviour
         if(facedirection!=0)
         {
             // transform.localScale=new Vector3(facedirection*transform.localScale.x,transform.localScale.y,transform.localScale.z);
-            transform.localScale=new Vector3(facedirection*0.3f,0.3f,0.3f);
+            transform.localScale=new Vector3(facedirection*0.2f,0.2f,0.2f);
         }
         //跳躍
         if(Input.GetButtonDown("Jump"))
@@ -63,6 +62,15 @@ public class player : MonoBehaviour
         {
             anim.SetBool("falling",false);
             anim.SetBool("idle",true);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag=="collection")
+        {
+            Destroy(collision.gameObject);
+            poop=poop+1;
         }
     }
 }
