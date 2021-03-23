@@ -5,13 +5,18 @@ using UnityEngine;
 public class enemy : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private Animator anim;
+    private Collider2D coll;
+    public LayerMask ground;
     public Transform leftpoint,rightpoint;
     private bool faceleft=true;
-    public float speed;
+    public float speed,attackforce;
     private float leftx,rightx;
     void Start()
     {
         rb=GetComponent<Rigidbody2D>();
+        anim=GetComponent<Animator>();
+        coll=GetComponent<Collider2D>();
         leftx=leftpoint.position.x;
         rightx=rightpoint.position.x;
         Destroy(leftpoint.gameObject);
@@ -20,27 +25,43 @@ public class enemy : MonoBehaviour
 
     void Update()
     {
-        movement();
+        SwitchAnim();
     }
 
-    void movement()
+    void Movement()
     {
-        if(faceleft)
+        if(faceleft)//面左
         {
-            rb.velocity=new Vector2(-speed,rb.velocity.y);
+            if(coll.IsTouchingLayers(ground))
+            {
+                anim.SetBool("attacking",true);
+                rb.velocity=new Vector2(-speed,attackforce);
+            }
             if(transform.position.x<leftx)
             {
-                transform.localScale=new Vector3(-0.12f,0.12f,0.12f);
+                transform.localScale=new Vector3(-0.3f,0.3f,0.3f);
                 faceleft=false;
             }
-        }else
+        }else//面右
         {
-            rb.velocity=new Vector2(speed,rb.velocity.y);
+            if(coll.IsTouchingLayers(ground))
+            {
+                anim.SetBool("attacking",true);
+                rb.velocity=new Vector2(speed,attackforce);
+            }
             if(transform.position.x>rightx)
             {
-                transform.localScale=new Vector3(0.12f,0.12f,0.12f);
+                transform.localScale=new Vector3(0.3f,0.3f,0.3f);
                 faceleft=true;
             }
+        }
+    }
+
+    void SwitchAnim()
+    {
+        if(coll.IsTouchingLayers(ground)&&anim.GetBool("attacking"))
+        {
+            anim.SetBool("attacking",false);
         }
     }
 }
