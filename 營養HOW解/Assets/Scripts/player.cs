@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class player : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class player : MonoBehaviour
     public float jumpforce;
     public LayerMask ground;
     public int poop;
+    public Text poopnum;
     void Start()
     {
         rb=GetComponent<Rigidbody2D>();
@@ -57,7 +59,8 @@ public class player : MonoBehaviour
             anim.SetBool("idle",true);
         }
     }
-
+    
+    //切換動畫
     void SwitchAnim()
     {
         anim.SetBool("idle",false);
@@ -76,12 +79,28 @@ public class player : MonoBehaviour
         }
     }
 
+    //收集物品
     void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag=="collection")
         {
             Destroy(collision.gameObject);
-            poop=poop+1;
+            poop+=1;
+            poopnum.text="X"+poop.ToString();
+        }
+    }
+
+    //消滅敵人
+    void OnCollisionEnter2D(Collider2D collision)
+    {
+        if(anim.GetBool("falling"))
+        {
+            if(collision.gameObject.tag=="enemy")
+            {
+            Destroy(collision.gameObject);
+            rb.velocity=new Vector2(rb.velocity.x,jumpforce*Time.deltaTime);
+            anim.SetBool("jumping",true);
+            }
         }
     }
 }
