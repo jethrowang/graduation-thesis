@@ -10,9 +10,11 @@ public class player : MonoBehaviour
     public Collider2D coll;
     public float speed;
     public float jumpforce;
+    public float bumpforce;
     public LayerMask ground;
     public int poop;
     public Text poopnum;
+    private bool ishurt;//默認false
     void Start()
     {
         rb=GetComponent<Rigidbody2D>();
@@ -21,7 +23,10 @@ public class player : MonoBehaviour
 
     void FixedUpdate()
     {
-        Movement();
+        if(!ishurt)
+        {
+            Movement();
+        }
         SwitchAnim();
     }
 
@@ -72,6 +77,16 @@ public class player : MonoBehaviour
                 anim.SetBool("jumping",false);
                 anim.SetBool("falling",true);
             }
+        }else if(ishurt)
+        {
+            anim.SetBool("hurt",true);
+            anim.SetFloat("running",0);
+            if(Mathf.Abs(rb.velocity.x)<0.1f)
+            {
+                anim.SetBool("hurt",false);
+                anim.SetBool("idle",true);
+                ishurt=false;
+            }
         }else if(coll.IsTouchingLayers(ground))
         {
             anim.SetBool("falling",false);
@@ -91,15 +106,23 @@ public class player : MonoBehaviour
     }
 
     //消滅敵人
-    void OnCollisionEnter2D(Collider2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        if(anim.GetBool("falling"))
+        if(collision.gameObject.tag=="enemy")
         {
-            if(collision.gameObject.tag=="enemy")
+            if(anim.GetBool("falling"))
             {
-            Destroy(collision.gameObject);
-            rb.velocity=new Vector2(rb.velocity.x,jumpforce*Time.deltaTime);
-            anim.SetBool("jumping",true);
+                Destroy(collision.gameObject);
+                rb.velocity=new Vector2(rb.velocity.x,bumpforce*Time.deltaTime);
+                anim.SetBool("jumping",true);
+            }else if(transform.position.x<collision.gameObject.transform.position.x)
+            {
+                rb.velocity=new Vector2(-3,rb.velocity.y);
+                ishurt=true;
+            }else if(transform.position.x>collision.gameObject.transform.position.x)
+            {
+                rb.velocity=new Vector2(3,rb.velocity.y);
+                ishurt=true;
             }
         }
     }
