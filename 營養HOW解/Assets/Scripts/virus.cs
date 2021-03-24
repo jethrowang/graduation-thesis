@@ -26,6 +26,7 @@ public class virus : MonoBehaviour
     void Update()
     {
         SwitchAnim();
+        Movement();
     }
 
     void Movement()
