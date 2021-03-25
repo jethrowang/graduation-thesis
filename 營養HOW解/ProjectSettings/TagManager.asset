@@ -9,6 +9,7 @@ TagManager:
   - bullet
   - platform
   - player
+  - saliva
   layers:
   - Default
   - TransparentFX

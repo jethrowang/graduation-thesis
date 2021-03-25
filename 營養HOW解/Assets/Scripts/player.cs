@@ -20,10 +20,14 @@ public class player : MonoBehaviour
     public Transform firepoint;
     public float firerate; //firerate秒實例化一個子彈
     public float nextfire;
+    public int hp;
+    public int max_hp;
+    public Image hp_bar;
     void Start()
     {
         rb=GetComponent<Rigidbody2D>();
         anim=GetComponent<Animator>();
+        hp = max_hp;
     }
 
     void FixedUpdate()
@@ -34,6 +38,7 @@ public class player : MonoBehaviour
             Throw();
         }
         SwitchAnim();
+        Hpfunction();
     }
 
     void Movement()
@@ -79,6 +84,7 @@ public class player : MonoBehaviour
         }
     }
 
+    //翻轉
     void Flip()
     {
         facing_right=!facing_right;
@@ -127,6 +133,10 @@ public class player : MonoBehaviour
             poop+=1;
             poopnum.text="X"+poop.ToString();
         }
+        if(collision.gameObject.tag=="saliva")
+        {
+            Hurt();
+        }
     }
 
     //消滅敵人
@@ -150,6 +160,28 @@ public class player : MonoBehaviour
                 ishurt=true;
             }
         }
+        if(collision.gameObject.tag=="enemy")
+        {
+            Hurt();
+        }
+    }
+
+    //受傷
+    void Hurt()
+    {
+        hp -= 1;
+        // flashcolor(flashtime);
+        // Instantiate(blood,transform.position,Quaternion.identity);
+    }
+
+    //血量
+    void Hpfunction()
+    {
+        if (hp <= 0)
+        {
+            Destroy(this.gameObject, 0.2f);
+        }
+        hp_bar.transform.localScale = new Vector2((float)hp / (float)max_hp, hp_bar.transform.localScale.y);
     }
 
     //射擊
