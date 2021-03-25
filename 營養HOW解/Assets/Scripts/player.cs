@@ -8,6 +8,8 @@ public class player : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     public Collider2D coll;
+    private bool facing_right=true;
+
     public float speed;
     public float jumpforce;
     public float bumpforce;
@@ -15,6 +17,10 @@ public class player : MonoBehaviour
     public int poop;
     public Text poopnum;
     private bool ishurt;//默認false
+    public GameObject bullet;
+    public Transform firepoint;
+    public float firerate; //firerate秒實例化一個子彈
+    public float nextfire;
     void Start()
     {
         rb=GetComponent<Rigidbody2D>();
@@ -28,6 +34,7 @@ public class player : MonoBehaviour
             Movement();
         }
         SwitchAnim();
+        Throw();
     }
 
     void Movement()
@@ -41,11 +48,19 @@ public class player : MonoBehaviour
             anim.SetFloat("running",Mathf.Abs(facedirection));
         }
         //方向
-        if(facedirection!=0)
+        if(facedirection>0&&!facing_right)
         {
-            // transform.localScale=new Vector3(facedirection*transform.localScale.x,transform.localScale.y,transform.localScale.z);
-            transform.localScale=new Vector3(facedirection*0.2f,0.2f,0.2f);
+            Flip();
+        }else if(facedirection<0&&facing_right)
+        {
+            Flip();
         }
+        // if(facedirection!=0)
+        // {
+        //     transform.localScale=new Vector3(facedirection*transform.localScale.x,transform.localScale.y,transform.localScale.z);
+        //     transform.localScale=new Vector3(facedirection*0.2f,0.2f,0.2f);
+            
+        // }
         //跳躍
         if(Input.GetButtonDown("Jump")&&coll.IsTouchingLayers(ground))
         {
@@ -63,6 +78,12 @@ public class player : MonoBehaviour
             anim.SetBool("crouching",true);
             anim.SetBool("idle",true);
         }
+    }
+
+    void Flip()
+    {
+        facing_right=!facing_right;
+        transform.Rotate(0f, 180f, 0f);
     }
     
     //切換動畫
@@ -114,9 +135,10 @@ public class player : MonoBehaviour
     {
         if(collision.gameObject.tag=="enemy")
         {
+            virus virus=collision.gameObject.GetComponent<virus>();
             if(anim.GetBool("falling"))
             {
-                Destroy(collision.gameObject);
+                virus.JumpOn();
                 rb.velocity=new Vector2(rb.velocity.x,bumpforce*Time.deltaTime);
                 anim.SetBool("jumping",true);
             }else if(transform.position.x<collision.gameObject.transform.position.x)
@@ -129,5 +151,23 @@ public class player : MonoBehaviour
                 ishurt=true;
             }
         }
+    }
+
+    //射擊
+    public void Throw()
+    {
+        if (Input.GetButtonDown("Throw"))
+        {
+            anim.SetTrigger("throw");
+            if(Time.time>nextfire){ //讓子彈發射有間隔
+                nextfire = Time.time + firerate; //Time.time表示從遊戲開發到現在的時間，會隨着遊戲的暫停而停止計算
+                Invoke("bulletinstantiate",0.5f);
+            }
+        }
+    }
+
+    //子彈生成
+    void bulletinstantiate(){
+        Instantiate(bullet, firepoint.transform.position, firepoint.rotation);
     }
 }

@@ -40,7 +40,7 @@ public class virus : MonoBehaviour
             }
             if(transform.position.x<leftx)
             {
-                transform.localScale=new Vector3(-0.7f,0.7f,0.7f);
+                transform.localScale=new Vector3(-0.5f,0.5f,0.5f);
                 faceleft=false;
             }
         }else//面右
@@ -52,7 +52,7 @@ public class virus : MonoBehaviour
             }
             if(transform.position.x>rightx)
             {
-                transform.localScale=new Vector3(0.7f,0.7f,0.7f);
+                transform.localScale=new Vector3(0.5f,0.5f,0.5f);
                 faceleft=true;
             }
         }
@@ -68,11 +68,19 @@ public class virus : MonoBehaviour
 
     void Death()
     {
-        anim.SetTrigger("death");
+        Destroy(gameObject);
     }
 
     public void JumpOn()
     {
-        Destroy(gameObject);
+        anim.SetTrigger("death");
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag=="bullet")
+        {
+            Destroy(gameObject);
+        }
     }
 }
