@@ -8,15 +8,14 @@ public class player : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     public Collider2D coll;
-    private bool facing_right=true;
-
+    public bool facing_right=true;
     public float speed;
     public float jumpforce;
     public float bumpforce;
     public LayerMask ground;
     public int poop;
     public Text poopnum;
-    private bool ishurt;//默認false
+    public bool ishurt;//默認false
     public GameObject bullet;
     public Transform firepoint;
     public float firerate; //firerate秒實例化一個子彈
@@ -32,9 +31,9 @@ public class player : MonoBehaviour
         if(!ishurt)
         {
             Movement();
+            Throw();
         }
         SwitchAnim();
-        Throw();
     }
 
     void Movement()

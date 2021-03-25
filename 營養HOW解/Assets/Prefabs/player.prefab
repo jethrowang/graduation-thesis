@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 1449411255318364863}
   m_Layer: 0
   m_Name: player
-  m_TagString: Untagged
+  m_TagString: player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coll: {fileID: 1449411255318364863}
+  facing_right: 1
   speed: 500
   jumpforce: 450
   bumpforce: 300
@@ -185,6 +186,7 @@ MonoBehaviour:
     m_Bits: 256
   poop: 0
   poopnum: {fileID: 0}
+  ishurt: 0
   bullet: {fileID: 8051927870851710270, guid: 502aaa16b201cac4eba59109ae9661cc, type: 3}
   firepoint: {fileID: 1449411253434860710}
   firerate: 2

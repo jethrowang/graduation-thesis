@@ -9,7 +9,7 @@ public class virus : MonoBehaviour
     private Collider2D coll;
     public LayerMask ground;
     public Transform leftpoint,rightpoint;
-    private bool faceleft=true;
+    public bool faceleft=true;
     public float speed,attackforce;
     private float leftx,rightx;
     void Start()

@@ -7,6 +7,8 @@ TagManager:
   - collection
   - enemy
   - bullet
+  - platform
+  - player
   layers:
   - Default
   - TransparentFX

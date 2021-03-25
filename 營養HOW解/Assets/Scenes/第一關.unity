@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 110180070}
   m_Layer: 8
   m_Name: platform
-  m_TagString: Untagged
+  m_TagString: platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -753,6 +753,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 469633684}
   m_CullTransparentMesh: 0
+--- !u!1 &471766319
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 471766321}
+  - component: {fileID: 471766320}
+  m_Layer: 0
+  m_Name: salivacreator
+  m_TagString: Untagged
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &471766320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471766319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edd13175f6796d646a6925794e26c46a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+  isgoingright: 0
+  createsaliva: 0
+  timer: 0
+  cd_time: 3
+  saliva_array:
+  - {fileID: 147103831201864336, guid: 0b9ba3bd1c2fcb0469b7fa0e04e358f0, type: 3}
+  - {fileID: 4758104479993212790, guid: 63d4a9f1d90fdbd4fa7357fe09061c9f, type: 3}
+  player: {fileID: 886822770}
+  distance: 5
+--- !u!4 &471766321
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471766319}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.01, y: 7.87, z: -6.716797}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &484079313
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,7 +1140,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.776059, y: -0.6086898, z: -10}
+  m_LocalPosition: {x: -4.776044, y: -0.61253786, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1719,6 +1772,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 318111560}
   parallaxeffect: 0.9
+--- !u!1 &886822770 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1449411255318364838, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1449411254005395791}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &987308862
 GameObject:
   m_ObjectHideFlags: 0
@@ -2767,6 +2826,11 @@ PrefabInstance:
     - target: {fileID: 1449411255318364838, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
         type: 3}
       propertyPath: m_Name
+      value: player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1449411255318364838, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+        type: 3}
+      propertyPath: m_TagString
       value: player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
