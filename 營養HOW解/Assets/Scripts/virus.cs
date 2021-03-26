@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class virus : MonoBehaviour
+public class virus : enemy
 {
     private Rigidbody2D rb;
-    private Animator anim;
+    // private Animator anim;
     private Collider2D coll;
     public LayerMask ground;
     public Transform leftpoint,rightpoint;
     public bool faceleft=true;
-    public float speed,attackforce;
+    public float speed,jumpforce;
     private float leftx,rightx;
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         rb=GetComponent<Rigidbody2D>();
-        anim=GetComponent<Animator>();
+        // anim=GetComponent<Animator>();
         coll=GetComponent<Collider2D>();
         leftx=leftpoint.position.x;
         rightx=rightpoint.position.x;
@@ -26,7 +27,6 @@ public class virus : MonoBehaviour
     void Update()
     {
         SwitchAnim();
-        Movement();
     }
 
     void Movement()
@@ -35,8 +35,8 @@ public class virus : MonoBehaviour
         {
             if(coll.IsTouchingLayers(ground))
             {
-                anim.SetBool("attacking",true);
-                rb.velocity=new Vector2(-speed,attackforce);
+                anim.SetBool("jumping",true);
+                rb.velocity=new Vector2(-speed,jumpforce);
             }
             if(transform.position.x<leftx)
             {
@@ -47,8 +47,8 @@ public class virus : MonoBehaviour
         {
             if(coll.IsTouchingLayers(ground))
             {
-                anim.SetBool("attacking",true);
-                rb.velocity=new Vector2(speed,attackforce);
+                anim.SetBool("jumping",true);
+                rb.velocity=new Vector2(speed,jumpforce);
             }
             if(transform.position.x>rightx)
             {
@@ -60,20 +60,18 @@ public class virus : MonoBehaviour
 
     void SwitchAnim()
     {
-        if(coll.IsTouchingLayers(ground)&&anim.GetBool("attacking"))
+        if(anim.GetBool("jumping"))
         {
-            anim.SetBool("attacking",false);
+            if(rb.velocity.y<0.1)
+            {
+                anim.SetBool("jumping",false);
+                anim.SetBool("falling",true);
+            }
         }
-    }
-
-    void Death()
-    {
-        Destroy(gameObject);
-    }
-
-    public void JumpOn()
-    {
-        anim.SetTrigger("death");
+        if(coll.IsTouchingLayers(ground)&&anim.GetBool("falling"))
+        {
+            anim.SetBool("falling",false);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)

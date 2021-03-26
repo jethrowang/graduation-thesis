@@ -8,6 +8,9 @@ public class player : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     public Collider2D coll;
+    public AudioSource jumpAudio;
+    public AudioSource hurtAudio;
+    public AudioSource poopAudio;
     public bool facing_right=true;
     public float speed;
     public float jumpforce;
@@ -41,6 +44,7 @@ public class player : MonoBehaviour
         Hpfunction();
     }
 
+    //移動
     void Movement()
     {
         float horizontalmove=Input.GetAxis("Horizontal");
@@ -69,6 +73,7 @@ public class player : MonoBehaviour
         if(Input.GetButtonDown("Jump")&&coll.IsTouchingLayers(ground))
         {
             rb.velocity=new Vector2(rb.velocity.x,jumpforce*Time.deltaTime);
+            jumpAudio.Play();
             anim.SetBool("jumping",true);
         }
         //蹲下
@@ -129,6 +134,7 @@ public class player : MonoBehaviour
     {
         if(collision.tag=="collection")
         {
+            poopAudio.Play();
             Destroy(collision.gameObject);
             poop+=1;
             poopnum.text="X"+poop.ToString();
@@ -144,31 +150,30 @@ public class player : MonoBehaviour
     {
         if(collision.gameObject.tag=="enemy")
         {
-            virus virus=collision.gameObject.GetComponent<virus>();
+            enemy enemy=collision.gameObject.GetComponent<enemy>();
             if(anim.GetBool("falling"))
             {
-                virus.JumpOn();
+                enemy.JumpOn();
                 rb.velocity=new Vector2(rb.velocity.x,bumpforce*Time.deltaTime);
                 anim.SetBool("jumping",true);
             }else if(transform.position.x<collision.gameObject.transform.position.x)
             {
                 rb.velocity=new Vector2(-3,rb.velocity.y);
+                Hurt();
                 ishurt=true;
             }else if(transform.position.x>collision.gameObject.transform.position.x)
             {
                 rb.velocity=new Vector2(3,rb.velocity.y);
+                Hurt();
                 ishurt=true;
             }
-        }
-        if(collision.gameObject.tag=="enemy")
-        {
-            Hurt();
         }
     }
 
     //受傷
     void Hurt()
     {
+        hurtAudio.Play();
         hp -= 1;
         // flashcolor(flashtime);
         // Instantiate(blood,transform.position,Quaternion.identity);
