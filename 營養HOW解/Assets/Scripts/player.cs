@@ -8,6 +8,8 @@ public class player : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     public Collider2D coll;
+    public Collider2D discoll;
+    public Transform ceilingCheck;
     public AudioSource jumpAudio;
     public AudioSource hurtAudio;
     public AudioSource poopAudio;
@@ -52,7 +54,7 @@ public class player : MonoBehaviour
         //移動
         if(horizontalmove!=0)
         {
-            rb.velocity=new Vector2(horizontalmove*speed*Time.deltaTime,rb.velocity.y);
+            rb.velocity=new Vector2(horizontalmove*speed*Time.fixedDeltaTime,rb.velocity.y);
             anim.SetFloat("running",Mathf.Abs(facedirection));
         }
         //方向
@@ -66,27 +68,17 @@ public class player : MonoBehaviour
         // if(facedirection!=0)
         // {
         //     transform.localScale=new Vector3(facedirection*transform.localScale.x,transform.localScale.y,transform.localScale.z);
-        //     transform.localScale=new Vector3(facedirection*0.2f,0.2f,0.2f);
-            
+        //     transform.localScale=new Vector3(facedirection*0.2f,0.2f,0.2f);  
         // }
         //跳躍
         if(Input.GetButtonDown("Jump")&&coll.IsTouchingLayers(ground))
         {
-            rb.velocity=new Vector2(rb.velocity.x,jumpforce*Time.deltaTime);
+            rb.velocity=new Vector2(rb.velocity.x,jumpforce*Time.fixedDeltaTime);
             jumpAudio.Play();
             anim.SetBool("jumping",true);
         }
         //蹲下
-        if(Input.GetButtonDown("Crouch")&&coll.IsTouchingLayers(ground))
-        {
-            anim.SetBool("idle",false);
-            anim.SetBool("crouching",true);
-        }
-        if(Input.GetButtonUp("Crouch")&&coll.IsTouchingLayers(ground))
-        {
-            anim.SetBool("crouching",true);
-            anim.SetBool("idle",true);
-        }
+        Crouch();
     }
 
     //翻轉
@@ -205,5 +197,22 @@ public class player : MonoBehaviour
     //子彈生成
     void bulletinstantiate(){
         Instantiate(bullet, firepoint.transform.position, firepoint.rotation);
+    }
+
+    //蹲下
+    void Crouch()
+    {
+        if(!Physics2D.OverlapCircle(ceilingCheck.position,0.2f,ground))
+        {
+            if(Input.GetButtonDown("Crouch"))
+            {
+                anim.SetBool("crouching",true);
+                discoll.enabled=false;
+            }else if(Input.GetButtonUp("Crouch"))
+            {
+                discoll.enabled=true;
+                anim.SetBool("crouching",false);
+            }
+        }
     }
 }

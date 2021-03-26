@@ -1327,7 +1327,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.022514, y: -0.55002594, z: -10}
+  m_LocalPosition: {x: 22.02251, y: -0.55000734, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1962,6 +1962,12 @@ MonoBehaviour:
 --- !u!1 &886822770 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1449411255318364838, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1449411254005395791}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &886822777 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1449411255318364834, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
     type: 3}
   m_PrefabInstance: {fileID: 1449411254005395791}
   m_PrefabAsset: {fileID: 0}
@@ -3363,6 +3369,11 @@ PrefabInstance:
       objectReference: {fileID: 1159170219}
     - target: {fileID: 1449411255318364833, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
         type: 3}
+      propertyPath: discoll
+      value: 
+      objectReference: {fileID: 886822777}
+    - target: {fileID: 1449411255318364833, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+        type: 3}
       propertyPath: poopnum
       value: 
       objectReference: {fileID: 519153356}
@@ -3436,6 +3447,11 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: b55202a6cff9b174abe235480b441275, type: 3}
+    - target: {fileID: 5975945036034458705, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99ae6be097af80f4fb9a737ac9de0b4e, type: 3}
 --- !u!1001 &2232634432399479924
