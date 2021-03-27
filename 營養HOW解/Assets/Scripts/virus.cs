@@ -40,7 +40,7 @@ public class virus : enemy
             }
             if(transform.position.x<leftx)
             {
-                transform.localScale=new Vector3(-0.5f,0.5f,0.5f);
+                transform.localScale=new Vector3(-0.35f,0.35f,0.35f);
                 faceleft=false;
             }
         }else//面右
@@ -52,7 +52,7 @@ public class virus : enemy
             }
             if(transform.position.x>rightx)
             {
-                transform.localScale=new Vector3(0.5f,0.5f,0.5f);
+                transform.localScale=new Vector3(0.35f,0.35f,0.35f);
                 faceleft=true;
             }
         }
