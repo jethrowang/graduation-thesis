@@ -10,6 +10,7 @@ TagManager:
   - platform
   - player
   - saliva
+  - deadline
   layers:
   - Default
   - TransparentFX

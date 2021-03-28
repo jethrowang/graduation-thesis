@@ -182,11 +182,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coll: {fileID: 1449411255318364863}
-  discoll: {fileID: 0}
+  discoll: {fileID: 1449411255318364834}
   ceilingCheck: {fileID: 3781327586166069327}
   jumpAudio: {fileID: 886822771}
   hurtAudio: {fileID: 4967325418372105095}
-  poopAudio: {fileID: 0}
+  poopAudio: {fileID: 4427051156491069406}
   facing_right: 1
   speed: 500
   jumpforce: 450
@@ -199,8 +199,8 @@ MonoBehaviour:
   ishurt: 0
   bullet: {fileID: 8051927870851710270, guid: 502aaa16b201cac4eba59109ae9661cc, type: 3}
   firepoint: {fileID: 1449411253434860710}
-  firerate: 2
-  nextfire: 3
+  firerate: 1.5
+  nextfire: 0
   hp: 0
   max_hp: 10
   hp_bar: {fileID: 0}
@@ -246,7 +246,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1449411255318364838}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 475f4837af487ce4a9e68bb227455e4c, type: 3}
@@ -537,7 +537,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: b55202a6cff9b174abe235480b441275, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

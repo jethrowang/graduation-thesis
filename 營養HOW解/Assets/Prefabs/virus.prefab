@@ -187,14 +187,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c174ec7ab5bc3c742abfea9be7e37435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coll: {fileID: 4513928176340729608}
   ground:
     serializedVersion: 2
     m_Bits: 256
   leftpoint: {fileID: 583249327628793669}
   rightpoint: {fileID: 583249326110899062}
   faceleft: 1
-  speed: 5
-  jumpforce: 0
+  speed: 2
+  jumpforce: 5
 --- !u!82 &583249327013562822
 AudioSource:
   m_ObjectHideFlags: 0

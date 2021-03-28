@@ -6,7 +6,7 @@ public class virus : enemy
 {
     private Rigidbody2D rb;
     // private Animator anim;
-    private Collider2D coll;
+    public Collider2D coll;
     public LayerMask ground;
     public Transform leftpoint,rightpoint;
     public bool faceleft=true;
@@ -17,7 +17,6 @@ public class virus : enemy
         base.Start();
         rb=GetComponent<Rigidbody2D>();
         // anim=GetComponent<Animator>();
-        coll=GetComponent<Collider2D>();
         leftx=leftpoint.position.x;
         rightx=rightpoint.position.x;
         Destroy(leftpoint.gameObject);
@@ -62,7 +61,7 @@ public class virus : enemy
     {
         if(anim.GetBool("jumping"))
         {
-            if(rb.velocity.y<0.1)
+            if(rb.velocity.y<0.1f)
             {
                 anim.SetBool("jumping",false);
                 anim.SetBool("falling",true);

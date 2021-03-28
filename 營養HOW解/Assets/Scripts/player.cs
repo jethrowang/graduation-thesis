@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class player : MonoBehaviour
 {
@@ -46,6 +47,13 @@ public class player : MonoBehaviour
         Hpfunction();
     }
 
+    void Update()
+    {
+        Jump();
+        Crouch();
+        Poopnum();
+    }
+
     //移動
     void Movement()
     {
@@ -69,16 +77,7 @@ public class player : MonoBehaviour
         // {
         //     transform.localScale=new Vector3(facedirection*transform.localScale.x,transform.localScale.y,transform.localScale.z);
         //     transform.localScale=new Vector3(facedirection*0.2f,0.2f,0.2f);  
-        // }
-        //跳躍
-        if(Input.GetButtonDown("Jump")&&coll.IsTouchingLayers(ground))
-        {
-            rb.velocity=new Vector2(rb.velocity.x,jumpforce*Time.fixedDeltaTime);
-            jumpAudio.Play();
-            anim.SetBool("jumping",true);
-        }
-        //蹲下
-        Crouch();
+        // }    
     }
 
     //翻轉
@@ -91,8 +90,6 @@ public class player : MonoBehaviour
     //切換動畫
     void SwitchAnim()
     {
-        anim.SetBool("idle",false);
-
         if(rb.velocity.y<0.1f&&!coll.IsTouchingLayers(ground))
         {
             anim.SetBool("falling",true);
@@ -111,29 +108,36 @@ public class player : MonoBehaviour
             if(Mathf.Abs(rb.velocity.x)<0.1f)
             {
                 anim.SetBool("hurt",false);
-                anim.SetBool("idle",true);
                 ishurt=false;
             }
         }else if(coll.IsTouchingLayers(ground))
         {
             anim.SetBool("falling",false);
-            anim.SetBool("idle",true);
         }
     }
 
-    //收集物品
+    //碰撞觸發
     void OnTriggerEnter2D(Collider2D collision)
     {
+        //收集物品
         if(collision.tag=="collection")
         {
             poopAudio.Play();
-            Destroy(collision.gameObject);
-            poop+=1;
-            poopnum.text="X"+poop.ToString();
+            // Destroy(collision.gameObject);
+            // poop+=1;
+            collision.GetComponent<Animator>().Play("collect");
         }
-        if(collision.gameObject.tag=="saliva")
+        //受傷
+        if(collision.tag=="saliva")
         {
+            ishurt=true;
             Hurt();
+        }
+        //重新開始
+        if(collision.tag=="deadline")
+        {
+            GetComponent<AudioSource>().enabled=false;
+            Invoke("Restart",2f);
         }
     }
 
@@ -151,13 +155,13 @@ public class player : MonoBehaviour
             }else if(transform.position.x<collision.gameObject.transform.position.x)
             {
                 rb.velocity=new Vector2(-3,rb.velocity.y);
-                Hurt();
                 ishurt=true;
+                Hurt();
             }else if(transform.position.x>collision.gameObject.transform.position.x)
             {
                 rb.velocity=new Vector2(3,rb.velocity.y);
-                Hurt();
                 ishurt=true;
+                Hurt();
             }
         }
     }
@@ -186,16 +190,19 @@ public class player : MonoBehaviour
     {
         if (Input.GetButtonDown("Throw"))
         {
-            anim.SetTrigger("throw");
-            if(Time.time>nextfire){ //讓子彈發射有間隔
+            if(Time.time>nextfire) //讓子彈發射有間隔
+            {
+                anim.SetTrigger("throw");
                 nextfire = Time.time + firerate; //Time.time表示從遊戲開發到現在的時間，會隨着遊戲的暫停而停止計算
-                Invoke("bulletinstantiate",0.5f);
+                Invoke("Bulletinstantiate",0.5f);
+                anim.SetBool("idle",true);
             }
         }
     }
 
     //子彈生成
-    void bulletinstantiate(){
+    void Bulletinstantiate()
+    {
         Instantiate(bullet, firepoint.transform.position, firepoint.rotation);
     }
 
@@ -204,15 +211,44 @@ public class player : MonoBehaviour
     {
         if(!Physics2D.OverlapCircle(ceilingCheck.position,0.2f,ground))
         {
-            if(Input.GetButtonDown("Crouch"))
+            if(Input.GetButton("Crouch"))
             {
                 anim.SetBool("crouching",true);
                 discoll.enabled=false;
-            }else if(Input.GetButtonUp("Crouch"))
+            }else
             {
                 discoll.enabled=true;
                 anim.SetBool("crouching",false);
             }
         }
+    }
+
+    //跳躍
+    void Jump()
+    {
+        if(Input.GetButtonDown("Jump")&&coll.IsTouchingLayers(ground))
+        {
+            rb.velocity=new Vector2(rb.velocity.x,jumpforce*Time.fixedDeltaTime);
+            jumpAudio.Play();
+            anim.SetBool("jumping",true);
+        }
+    }
+
+    //重新開始
+    void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    //收集計算
+    public void Poopcount()
+    {
+        poop+=1;
+    }
+
+    //收集計數
+    void Poopnum()
+    {
+        poopnum.text="X"+poop.ToString();
     }
 }
