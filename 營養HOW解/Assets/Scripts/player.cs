@@ -10,7 +10,7 @@ public class player : MonoBehaviour
     private Animator anim;
     public Collider2D coll;
     public Collider2D discoll;
-    public Transform ceilingCheck;
+    public Transform ceilingCheck,groundCheck;
     public AudioSource jumpAudio;
     public AudioSource hurtAudio;
     public AudioSource poopAudio;
@@ -22,6 +22,8 @@ public class player : MonoBehaviour
     public int poop;
     public Text poopnum;
     public bool ishurt;//默認false
+    private bool isGround;
+    private int extraJump;
     public GameObject bullet;
     public Transform firepoint;
     public float firerate; //firerate秒實例化一個子彈
@@ -29,6 +31,7 @@ public class player : MonoBehaviour
     public int hp;
     public int max_hp;
     public Image hp_bar;
+    public Joystick joystick;
     void Start()
     {
         rb=GetComponent<Rigidbody2D>();
@@ -45,6 +48,7 @@ public class player : MonoBehaviour
         }
         SwitchAnim();
         Hpfunction();
+        isGround=Physics2D.OverlapCircle(groundCheck.position,0.2f,ground);
     }
 
     void Update()
@@ -57,6 +61,7 @@ public class player : MonoBehaviour
     //移動
     void Movement()
     {
+        // float horizontalmoveJoystick=joystick.Horizontal;
         float horizontalmove=Input.GetAxis("Horizontal");
         float facedirection=Input.GetAxisRaw("Horizontal");
         //移動
@@ -65,14 +70,26 @@ public class player : MonoBehaviour
             rb.velocity=new Vector2(horizontalmove*speed*Time.fixedDeltaTime,rb.velocity.y);
             anim.SetFloat("running",Mathf.Abs(facedirection));
         }
+        // if(horizontalmoveJoystick!=0)
+        // {
+        //     rb.velocity=new Vector2(horizontalmoveJoystick*speed*Time.fixedDeltaTime,rb.velocity.y);
+        //     anim.SetFloat("running",Mathf.Abs(facedirection));
+        // }
         //方向
-        if(facedirection>0&&!facing_right)
+        if(facedirection>0f&&!facing_right)
         {
             Flip();
-        }else if(facedirection<0&&facing_right)
+        }else if(facedirection<0f&&facing_right)
         {
             Flip();
         }
+        // if(horizontalmoveJoystick>0f&&!facing_right)
+        // {
+        //     Flip();
+        // }else if(horizontalmoveJoystick<0f&&facing_right)
+        // {
+        //     Flip();
+        // }
         // if(facedirection!=0)
         // {
         //     transform.localScale=new Vector3(facedirection*transform.localScale.x,transform.localScale.y,transform.localScale.z);
@@ -220,16 +237,49 @@ public class player : MonoBehaviour
                 discoll.enabled=true;
                 anim.SetBool("crouching",false);
             }
+            // if(joystick.Vertical<-0.5f)
+            // {
+            //     anim.SetBool("crouching",true);
+            //     discoll.enabled=false;
+            // }else
+            // {
+            //     discoll.enabled=true;
+            //     anim.SetBool("crouching",false);
+            // }
         }
     }
 
     //跳躍
     void Jump()
     {
-        if(Input.GetButtonDown("Jump")&&coll.IsTouchingLayers(ground))
+        // if(Input.GetButtonDown("Jump")&&coll.IsTouchingLayers(ground))
+        // {
+        //     rb.velocity=new Vector2(rb.velocity.x,jumpforce*Time.fixedDeltaTime);
+        //     jumpAudio.Play();
+        //     anim.SetBool("jumping",true);
+        // }
+        // if(joystick.Vertical>0.5f&&coll.IsTouchingLayers(ground))
+        // {
+        //     rb.velocity=new Vector2(rb.velocity.x,jumpforce*Time.fixedDeltaTime);
+        //     jumpAudio.Play();
+        //     anim.SetBool("jumping",true);
+        // }
+
+        if(isGround)
         {
-            rb.velocity=new Vector2(rb.velocity.x,jumpforce*Time.fixedDeltaTime);
+            extraJump=1;
+        }
+        if(Input.GetButtonDown("Jump")&&extraJump>0)
+        {
             jumpAudio.Play();
+            rb.velocity=Vector2.up*jumpforce;
+            extraJump--;
+            anim.SetBool("jumping",true);
+        }
+        if(Input.GetButtonDown("Jump")&&extraJump==0&&isGround)
+        {
+            jumpAudio.Play();
+            rb.velocity=Vector2.up*jumpforce;
             anim.SetBool("jumping",true);
         }
     }

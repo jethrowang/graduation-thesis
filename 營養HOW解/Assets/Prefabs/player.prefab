@@ -69,6 +69,7 @@ Transform:
   m_Children:
   - {fileID: 1449411253434860710}
   - {fileID: 3781327586166069327}
+  - {fileID: 3930697982172007483}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -184,6 +185,7 @@ MonoBehaviour:
   coll: {fileID: 1449411255318364863}
   discoll: {fileID: 1449411255318364834}
   ceilingCheck: {fileID: 3781327586166069327}
+  groundCheck: {fileID: 0}
   jumpAudio: {fileID: 886822771}
   hurtAudio: {fileID: 4967325418372105095}
   poopAudio: {fileID: 4427051156491069406}
@@ -204,6 +206,7 @@ MonoBehaviour:
   hp: 0
   max_hp: 10
   hp_bar: {fileID: 0}
+  joystick: {fileID: 0}
 --- !u!95 &1449411255318364832
 Animator:
   serializedVersion: 3
@@ -656,4 +659,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1449411255318364836}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8345115077340800745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3930697982172007483}
+  m_Layer: 0
+  m_Name: ground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3930697982172007483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8345115077340800745}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -4.29, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1449411255318364836}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
