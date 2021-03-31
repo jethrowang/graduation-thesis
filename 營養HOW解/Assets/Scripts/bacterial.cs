@@ -6,7 +6,6 @@ public class bacterial : enemy
 {
     private Rigidbody2D rb;
     private Collider2D coll;
-    // private Animator anim;
     public Transform top,buttom;
     public float speed;
     private float topy,buttomy;
@@ -16,7 +15,6 @@ public class bacterial : enemy
         base.Start();
         rb=GetComponent<Rigidbody2D>();
         coll=GetComponent<Collider2D>();
-        // anim=GetComponent<Animator>();
         topy=top.position.y;
         buttomy=buttom.position.y;
         Destroy(top.gameObject);

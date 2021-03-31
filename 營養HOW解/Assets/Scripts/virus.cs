@@ -5,7 +5,6 @@ using UnityEngine;
 public class virus : enemy
 {
     private Rigidbody2D rb;
-    // private Animator anim;
     public Collider2D coll;
     public LayerMask ground;
     public Transform leftpoint,rightpoint;
@@ -16,7 +15,6 @@ public class virus : enemy
     {
         base.Start();
         rb=GetComponent<Rigidbody2D>();
-        // anim=GetComponent<Animator>();
         leftx=leftpoint.position.x;
         rightx=rightpoint.position.x;
         Destroy(leftpoint.gameObject);

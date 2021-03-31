@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 464797797978396529}
   - component: {fileID: 464797797978396531}
   - component: {fileID: 3457954246744760219}
-  - component: {fileID: 3135141040480639731}
+  - component: {fileID: 651103312}
   m_Layer: 0
   m_Name: bacterial
   m_TagString: enemy
@@ -160,7 +160,7 @@ MonoBehaviour:
   buttom: {fileID: 6825240297587538786}
   speed: 1
   isup: 1
---- !u!82 &3135141040480639731
+--- !u!82 &651103312
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

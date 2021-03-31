@@ -11,9 +11,6 @@ public class player : MonoBehaviour
     public Collider2D coll;
     public Collider2D discoll;
     public Transform ceilingCheck,groundCheck;
-    public AudioSource jumpAudio;
-    public AudioSource hurtAudio;
-    public AudioSource poopAudio;
     public bool facing_right=true;
     public float speed;
     public float jumpforce;
@@ -90,11 +87,6 @@ public class player : MonoBehaviour
         // {
         //     Flip();
         // }
-        // if(facedirection!=0)
-        // {
-        //     transform.localScale=new Vector3(facedirection*transform.localScale.x,transform.localScale.y,transform.localScale.z);
-        //     transform.localScale=new Vector3(facedirection*0.2f,0.2f,0.2f);  
-        // }    
     }
 
     //翻轉
@@ -139,9 +131,7 @@ public class player : MonoBehaviour
         //收集物品
         if(collision.tag=="collection")
         {
-            poopAudio.Play();
-            // Destroy(collision.gameObject);
-            // poop+=1;
+            soundmanager.instance.Poopaudio();
             collision.GetComponent<Animator>().Play("collect");
         }
         //受傷
@@ -186,10 +176,8 @@ public class player : MonoBehaviour
     //受傷
     void Hurt()
     {
-        hurtAudio.Play();
+        soundmanager.instance.Hurtaudio();
         hp -= 1;
-        // flashcolor(flashtime);
-        // Instantiate(blood,transform.position,Quaternion.identity);
     }
 
     //血量
@@ -271,15 +259,15 @@ public class player : MonoBehaviour
         }
         if(Input.GetButtonDown("Jump")&&extraJump>0)
         {
-            jumpAudio.Play();
             rb.velocity=Vector2.up*jumpforce;
             extraJump--;
+            soundmanager.instance.Jumpaudio();
             anim.SetBool("jumping",true);
         }
         if(Input.GetButtonDown("Jump")&&extraJump==0&&isGround)
         {
-            jumpAudio.Play();
             rb.velocity=Vector2.up*jumpforce;
+            soundmanager.instance.Jumpaudio();
             anim.SetBool("jumping",true);
         }
     }
