@@ -15,7 +15,7 @@ public class player : MonoBehaviour
     public bool isGround;
     public bool isjump;
     public bool jumpPressed,jumpHeld,crouchHeld;
-    [Header("檢查")]
+    [Header("環境")]
     public Transform ceilingCheck,groundCheck;
     public LayerMask ground;
     [Header("碰撞器")]
@@ -104,7 +104,7 @@ public class player : MonoBehaviour
         }
     }
 
-//蹲下
+    //蹲下
     void Crouch()
     {
         if(!Physics2D.OverlapCircle(ceilingCheck.position,0.2f,ground))
@@ -229,7 +229,7 @@ public class player : MonoBehaviour
         //重新開始
         if(collision.tag=="deadline")
         {
-            GetComponent<AudioSource>().enabled=false;
+            // GetComponent<AudioSource>().enabled=false;
             Invoke("Restart",2f);
         }
     }
