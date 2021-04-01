@@ -8,26 +8,43 @@ public class player : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator anim;
+    [Header("狀態")]
+    public bool facing_right=true;
+    public bool ishurt;
+    public bool iscrouch;
+    public bool isGround;
+    public bool isjump;
+    public bool jumpPressed,jumpHeld,crouchHeld;
+    [Header("檢查")]
+    public Transform ceilingCheck,groundCheck;
+    public LayerMask ground;
+    [Header("碰撞器")]
     public Collider2D coll;
     public Collider2D discoll;
-    public Transform ceilingCheck,groundCheck;
-    public bool facing_right=true;
+    [Header("移動")]
     public float speed;
+    public float crouchspeedDivisor;
+    [Header("跳躍")]
     public float jumpforce;
+    public float jumpholdforce;
+    public float jumptime;
+    public float jumpholdduration;
+    public float crouchjumpboost;
     public float bumpforce;
-    public LayerMask ground;
+    public int extraJump;
+    [Header("收集")]
     public int poop;
     public Text poopnum;
-    public bool ishurt;//默認false
-    private bool isGround;
-    private int extraJump;
+    [Header("子彈")]
     public GameObject bullet;
     public Transform firepoint;
     public float firerate; //firerate秒實例化一個子彈
     public float nextfire;
+    [Header("血條")]
     public int hp;
     public int max_hp;
     public Image hp_bar;
+    [Header("搖桿")]
     public Joystick joystick;
     void Start()
     {
@@ -50,7 +67,10 @@ public class player : MonoBehaviour
 
     void Update()
     {
-        Jump();
+        jumpPressed=Input.GetButtonDown("Jump");
+        jumpHeld=Input.GetButton("Jump");
+        crouchHeld=Input.GetButton("Crouch");
+        Jump2();
         Crouch();
         Poopnum();
     }
@@ -58,20 +78,22 @@ public class player : MonoBehaviour
     //移動
     void Movement()
     {
-        // float horizontalmoveJoystick=joystick.Horizontal;
         float horizontalmove=Input.GetAxis("Horizontal");
         float facedirection=Input.GetAxisRaw("Horizontal");
         //移動
         if(horizontalmove!=0)
         {
-            rb.velocity=new Vector2(horizontalmove*speed*Time.fixedDeltaTime,rb.velocity.y);
-            anim.SetFloat("running",Mathf.Abs(facedirection));
+            if(iscrouch)
+            {
+                horizontalmove/=crouchspeedDivisor;
+                rb.velocity=new Vector2(horizontalmove*speed*Time.fixedDeltaTime,rb.velocity.y);
+                anim.SetFloat("running",Mathf.Abs(facedirection));
+            }else
+            {
+                rb.velocity=new Vector2(horizontalmove*speed*Time.fixedDeltaTime,rb.velocity.y);
+                anim.SetFloat("running",Mathf.Abs(facedirection));
+            }
         }
-        // if(horizontalmoveJoystick!=0)
-        // {
-        //     rb.velocity=new Vector2(horizontalmoveJoystick*speed*Time.fixedDeltaTime,rb.velocity.y);
-        //     anim.SetFloat("running",Mathf.Abs(facedirection));
-        // }
         //方向
         if(facedirection>0f&&!facing_right)
         {
@@ -80,13 +102,77 @@ public class player : MonoBehaviour
         {
             Flip();
         }
-        // if(horizontalmoveJoystick>0f&&!facing_right)
-        // {
-        //     Flip();
-        // }else if(horizontalmoveJoystick<0f&&facing_right)
-        // {
-        //     Flip();
-        // }
+    }
+
+//蹲下
+    void Crouch()
+    {
+        if(!Physics2D.OverlapCircle(ceilingCheck.position,0.2f,ground))
+        {
+            if(Input.GetButton("Crouch"))
+            {
+                iscrouch=true;
+                anim.SetBool("crouching",true);
+                discoll.enabled=false;
+            }else
+            {
+                iscrouch=false;
+                discoll.enabled=true;
+                anim.SetBool("crouching",false);
+            }
+        }
+    }
+
+    //跳躍(二段)
+    void Jump1()
+    {
+        if(isGround)
+        {
+            extraJump=1;
+        }
+        if(Input.GetButtonDown("Jump")&&extraJump>0)
+        {
+            rb.velocity=Vector2.up*jumpforce;
+            extraJump--;
+            soundmanager.instance.Jumpaudio();
+            anim.SetBool("jumping",true);
+        }
+        if(Input.GetButtonDown("Jump")&&extraJump==0&&isGround)
+        {
+            rb.velocity=Vector2.up*jumpforce;
+            soundmanager.instance.Jumpaudio();
+            anim.SetBool("jumping",true);
+        }
+    }
+
+    //跳躍(長按)
+    void Jump2()
+    {
+        if(jumpPressed&&isGround&&!isjump)
+        {
+            if(iscrouch&&isGround)
+            {
+                soundmanager.instance.Jumpaudio();
+                anim.SetBool("jumping",true);
+                rb.AddForce(new Vector2(0f,crouchjumpboost),ForceMode2D.Impulse);
+            }
+            isGround=false;
+            isjump=true;
+            jumptime=Time.time+jumpholdduration;
+            soundmanager.instance.Jumpaudio();
+            anim.SetBool("jumping",true);
+            rb.AddForce(new Vector2(0f,jumpforce),ForceMode2D.Impulse);
+        }else if(isjump)
+        {
+            if(jumpHeld)
+            {
+                rb.AddForce(new Vector2(0f,jumpholdforce),ForceMode2D.Impulse);
+            }
+            if(jumptime<Time.time)
+            {
+                isjump=false;
+            }
+        }
     }
 
     //翻轉
@@ -209,67 +295,6 @@ public class player : MonoBehaviour
     void Bulletinstantiate()
     {
         Instantiate(bullet, firepoint.transform.position, firepoint.rotation);
-    }
-
-    //蹲下
-    void Crouch()
-    {
-        if(!Physics2D.OverlapCircle(ceilingCheck.position,0.2f,ground))
-        {
-            if(Input.GetButton("Crouch"))
-            {
-                anim.SetBool("crouching",true);
-                discoll.enabled=false;
-            }else
-            {
-                discoll.enabled=true;
-                anim.SetBool("crouching",false);
-            }
-            // if(joystick.Vertical<-0.5f)
-            // {
-            //     anim.SetBool("crouching",true);
-            //     discoll.enabled=false;
-            // }else
-            // {
-            //     discoll.enabled=true;
-            //     anim.SetBool("crouching",false);
-            // }
-        }
-    }
-
-    //跳躍
-    void Jump()
-    {
-        // if(Input.GetButtonDown("Jump")&&coll.IsTouchingLayers(ground))
-        // {
-        //     rb.velocity=new Vector2(rb.velocity.x,jumpforce*Time.fixedDeltaTime);
-        //     jumpAudio.Play();
-        //     anim.SetBool("jumping",true);
-        // }
-        // if(joystick.Vertical>0.5f&&coll.IsTouchingLayers(ground))
-        // {
-        //     rb.velocity=new Vector2(rb.velocity.x,jumpforce*Time.fixedDeltaTime);
-        //     jumpAudio.Play();
-        //     anim.SetBool("jumping",true);
-        // }
-
-        if(isGround)
-        {
-            extraJump=1;
-        }
-        if(Input.GetButtonDown("Jump")&&extraJump>0)
-        {
-            rb.velocity=Vector2.up*jumpforce;
-            extraJump--;
-            soundmanager.instance.Jumpaudio();
-            anim.SetBool("jumping",true);
-        }
-        if(Input.GetButtonDown("Jump")&&extraJump==0&&isGround)
-        {
-            rb.velocity=Vector2.up*jumpforce;
-            soundmanager.instance.Jumpaudio();
-            anim.SetBool("jumping",true);
-        }
     }
 
     //重新開始

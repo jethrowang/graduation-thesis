@@ -7547,7 +7547,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2129129030}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 58e23c8e340738f4eb79633a14ad9172,
     type: 2}
@@ -7728,6 +7728,36 @@ PrefabInstance:
       propertyPath: joystick
       value: 
       objectReference: {fileID: 2053991422}
+    - target: {fileID: 1449411255318364833, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+        type: 3}
+      propertyPath: extraJump
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1449411255318364833, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+        type: 3}
+      propertyPath: jumpforce
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1449411255318364833, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+        type: 3}
+      propertyPath: jumpholdforce
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1449411255318364833, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+        type: 3}
+      propertyPath: crouchjumpboost
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1449411255318364833, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+        type: 3}
+      propertyPath: jumpholdduration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1449411255318364833, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+        type: 3}
+      propertyPath: crouchspeedDivisor
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1449411255318364836, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
         type: 3}
       propertyPath: m_RootOrder
