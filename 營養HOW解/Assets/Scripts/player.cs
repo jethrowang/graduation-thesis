@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class player : MonoBehaviour
 {
+    private Cinemachine.CinemachineCollisionImpulseSource MyInpulse;
     private Rigidbody2D rb;
     private Animator anim;
     [Header("狀態")]
@@ -50,6 +51,7 @@ public class player : MonoBehaviour
     {
         rb=GetComponent<Rigidbody2D>();
         anim=GetComponent<Animator>();
+        MyInpulse = GetComponent<Cinemachine.CinemachineCollisionImpulseSource>();
         hp = max_hp;
     }
 
@@ -223,6 +225,7 @@ public class player : MonoBehaviour
         //受傷
         if(collision.tag=="saliva")
         {
+            MyInpulse.GenerateImpulse();
             ishurt=true;
             Hurt();
         }
@@ -247,11 +250,13 @@ public class player : MonoBehaviour
                 anim.SetBool("jumping",true);
             }else if(transform.position.x<collision.gameObject.transform.position.x)
             {
+                MyInpulse.GenerateImpulse();
                 rb.velocity=new Vector2(-3,rb.velocity.y);
                 ishurt=true;
                 Hurt();
             }else if(transform.position.x>collision.gameObject.transform.position.x)
             {
+                MyInpulse.GenerateImpulse();
                 rb.velocity=new Vector2(3,rb.velocity.y);
                 ishurt=true;
                 Hurt();

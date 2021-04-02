@@ -3361,9 +3361,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ChannelMask: 1
+  m_ChannelMask: -1
   m_Gain: 1
-  m_Use2DDistance: 0
+  m_Use2DDistance: 1
 --- !u!1 &381409862
 GameObject:
   m_ObjectHideFlags: 0
@@ -7858,6 +7858,16 @@ PrefabInstance:
       propertyPath: jumpforce
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1449411255318364833, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+        type: 3}
+      propertyPath: jumpholdforce
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1449411255318364833, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+        type: 3}
+      propertyPath: crouchjumpboost
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1449411255318364836, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
         type: 3}
       propertyPath: m_RootOrder
@@ -7917,6 +7927,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5606684496718240724, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5606684496718240724, guid: 99ae6be097af80f4fb9a737ac9de0b4e,
+        type: 3}
+      propertyPath: m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99ae6be097af80f4fb9a737ac9de0b4e, type: 3}
