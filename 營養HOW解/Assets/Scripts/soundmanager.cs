@@ -6,7 +6,7 @@ public class soundmanager : MonoBehaviour
 {
     public static soundmanager instance;
     public AudioSource audioSource;
-    public AudioClip jumpAudio,hurtAudio,poopAudio;
+    public AudioClip jumpAudio,hurtAudio,poopAudio,deathAudio,throwAudio;
     private void Awake()
     {
         instance=this;
@@ -24,6 +24,16 @@ public class soundmanager : MonoBehaviour
     public void Poopaudio()
     {
         audioSource.clip=poopAudio;
+        audioSource.Play();
+    }
+    public void Deathaudio()
+    {
+        audioSource.clip=deathAudio;
+        audioSource.Play();
+    }
+    public void Throwaudio()
+    {
+        audioSource.clip=throwAudio;
         audioSource.Play();
     }
 }

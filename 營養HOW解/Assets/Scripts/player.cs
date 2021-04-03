@@ -233,6 +233,7 @@ public class player : MonoBehaviour
         if(collision.tag=="deadline")
         {
             // GetComponent<AudioSource>().enabled=false;
+            soundmanager.instance.Deathaudio();
             Invoke("Restart",2f);
         }
     }
@@ -300,6 +301,7 @@ public class player : MonoBehaviour
     void Bulletinstantiate()
     {
         Instantiate(bullet, firepoint.transform.position, firepoint.rotation);
+        soundmanager.instance.Throwaudio();
     }
 
     //重新開始
