@@ -479,7 +479,7 @@ MonoBehaviour:
   speed: 500
   crouchspeedDivisor: 5
   jumpforce: 2
-  jumpholdforce: 0.8
+  jumpholdforce: 1
   jumptime: 0
   jumpholdduration: 0.1
   crouchjumpboost: 2
