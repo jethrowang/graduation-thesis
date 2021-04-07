@@ -33,6 +33,7 @@ public class player : MonoBehaviour
     public float crouchjumpboost;
     public float bumpforce;
     public int extraJump;
+    public float hurtforce;
     [Header("收集")]
     public int poop;
     public Text poopnum;
@@ -252,13 +253,13 @@ public class player : MonoBehaviour
             }else if(transform.position.x<collision.gameObject.transform.position.x)
             {
                 MyInpulse.GenerateImpulse();
-                rb.velocity=new Vector2(-3,rb.velocity.y);
+                rb.velocity=new Vector2(-hurtforce,rb.velocity.y);
                 ishurt=true;
                 Hurt();
             }else if(transform.position.x>collision.gameObject.transform.position.x)
             {
                 MyInpulse.GenerateImpulse();
-                rb.velocity=new Vector2(3,rb.velocity.y);
+                rb.velocity=new Vector2(hurtforce,rb.velocity.y);
                 ishurt=true;
                 Hurt();
             }

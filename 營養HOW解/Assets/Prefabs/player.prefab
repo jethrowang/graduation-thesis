@@ -478,13 +478,14 @@ MonoBehaviour:
   discoll: {fileID: 1449411255318364834}
   speed: 500
   crouchspeedDivisor: 5
-  jumpforce: 2
+  jumpforce: 1.8
   jumpholdforce: 1
   jumptime: 0
   jumpholdduration: 0.1
   crouchjumpboost: 2
   bumpforce: 300
   extraJump: 1
+  hurtforce: 7
   poop: 0
   poopnum: {fileID: 0}
   bullet: {fileID: 8051927870851710270, guid: 502aaa16b201cac4eba59109ae9661cc, type: 3}
@@ -492,7 +493,7 @@ MonoBehaviour:
   firerate: 1.5
   nextfire: 0
   hp: 0
-  max_hp: 10
+  max_hp: 5
   hp_bar: {fileID: 0}
   joystick: {fileID: 0}
 --- !u!114 &5606684496718240724
@@ -593,7 +594,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.44827843
+        value: 0.28448665
         inSlope: 0
         outSlope: 0
         tangentMode: 0
