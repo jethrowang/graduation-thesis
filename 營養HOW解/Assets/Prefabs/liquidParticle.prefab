@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 410129521430050508}
   - component: {fileID: 410129521430050509}
   - component: {fileID: 410129521430050546}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: liquidParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 3
   m_Material: {fileID: 6200000, guid: 3fe47c222d43c0f4f97d34ada5c51a4c, type: 2}
   m_Interpolate: 0
