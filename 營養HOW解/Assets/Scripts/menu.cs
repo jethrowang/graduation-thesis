@@ -6,23 +6,23 @@ public class menu : MonoBehaviour
 {
     public GameObject pauseMenu;
     public AudioMixer audioMixer;
-    public void PlayGame()
+    public void StartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 
-    public void QuitGame()
+    public void Quit()
     {
         Application.Quit();
     }
 
-    public void PauseGame()
+    public void Pause()
     {
         pauseMenu.SetActive(true);
         Time.timeScale=0f;
     }
 
-    public void ResumeGame()
+    public void Resume()
     {
         pauseMenu.SetActive(false);
         Time.timeScale=1f;
@@ -31,5 +31,20 @@ public class menu : MonoBehaviour
     public void SetVolume(float value)
     {
         audioMixer.SetFloat("mainVolume",value);
+    }
+
+    public void Setting()
+    {
+
+    }
+
+    public void Knowledge()
+    {
+
+    }
+
+    public void Skip()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 }
